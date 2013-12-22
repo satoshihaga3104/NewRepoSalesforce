@@ -1,0 +1,50 @@
+<apex:page standardController="AWS_S3_Object__c" extensions="S3FormController" action="{!constructor}">
+
+    <apex:pageMessages />
+
+	<script>
+		alert('AWSAccessKeyId={!key}');
+		alert('policy={!policy}');
+		alert('signature={!signedPolicy}');
+	</script>
+
+	<form action="https://s3.amazonaws.com/{!s3BucketName}"
+		  method="post"
+		  enctype="multipart/form-data">
+
+
+		<input type="hidden"  name="AWSAccessKeyId" value="{!key}" />
+		<input type="hidden"  name="policy" 		value="{!policy}" />
+		<input type="hidden"  name="signature" 		value="{!signedPolicy}" />
+		<input type="hidden"  name="acl" 			value="public-read" />
+
+		<input type="hidden"  name="Content-Type" value="image/png" />
+		<input type="hidden" name="success_action_redirect" value="https://c.na15.visual.force.com/home/home.jsp" />
+
+		<apex:pageBlock title="問合せフォーム" mode="edit">
+
+			<apex:pageBlockButtons >
+				<input class="btn" type="submit" value="Send to Amazon" />
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection title="Local File to load" columns="1">
+
+				<apex:pageBlockSectionItem >
+
+					<apex:outputLabel value="登録名" />
+					{!s3BucketName}/<input type="text"  name="key" style="width:100px"/>
+
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+
+					<apex:outputLabel value="ファイル選択" />
+					<input type="file" size="50" name="file" />
+
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</form>
+
+</apex:page>

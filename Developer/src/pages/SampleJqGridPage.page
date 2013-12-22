@@ -1,0 +1,91 @@
+<apex:page >
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.JsonLibraryJapan, '/JsonLibraryJapan/jquery/css/ui-lightness/jquery-ui-1.10.2.custom.css')}" />
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.JsonLibraryJapan, '/JsonLibraryJapan/jqGrid/css/ui.jqgrid.css')}" />
+
+	<script src="{!URLFOR($Resource.JsonLibraryJapan, '/JsonLibraryJapan/jquery/js/jquery-1.9.1.js')}" type="text/javascript"></script> 
+	<script src="{!URLFOR($Resource.JsonLibraryJapan, '/JsonLibraryJapan/jquery/js/jquery-ui-1.10.2.custom.min.js')}" type="text/javascript"></script>
+	<script src="{!URLFOR($Resource.JsonLibraryJapan, '/JsonLibraryJapan/jqGrid/js/i18n/grid.locale-en.js')}" type="text/javascript"></script> 
+	<script src="{!URLFOR($Resource.JsonLibraryJapan, '/JsonLibraryJapan/jqGrid/js/jquery.jqGrid.src.js')}" type="text/javascript"></script>
+
+	<style>
+	    .testcss { border: 1px solid #a6c9e2; background-color: #e6e6fa ; color: #222222; }
+	</style>
+	<script>
+		jQuery(document).ready(function()
+		{
+			var mydata = [
+					{no:"1",ClientName:"サントリー酒類株式会社",CatalinaAD:"服部彰一",PlanName:"ノンある気分",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"2",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"3",ClientName:"サントリー酒類株式会社",CatalinaAD:"服部彰一",PlanName:"ノンある気分",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"4",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"5",ClientName:"サントリー酒類株式会社",CatalinaAD:"服部彰一",PlanName:"ノンある気分",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"6",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"7",ClientName:"サントリー酒類株式会社",CatalinaAD:"服部彰一",PlanName:"ノンある気分",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"8",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"9",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"10",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"11",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"12",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"13",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"14",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"15",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"16",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"17",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"18",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"19",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"20",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"21",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"22",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"23",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"24",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+					{no:"25",ClientName:"プロクター＆ギャンブルジャパン",CatalinaAD:"池田寛之",PlanName:"ジョイ",PrintStartDate:"2013/01/01",PrintStopDate:"2013/12/31",ExpireDate:"2014/03/31",AwardNo:"123322"},
+		
+				];
+		
+			jQuery("#list").jqGrid({
+				datatype: "local",
+				data: mydata,
+				colNames:['No', '顧客名','担当営業','企画名','発券開始日','発券終了日','有効期限日','Award＃'],
+				colModel:[
+					{name:'no'},
+					{name:'ClientName'},
+					{name:'CatalinaAD'},
+					{name:'PlanName'},
+					{name:'PrintStartDate'},
+					{name:'PrintStopDate'},
+					{name:'ExpireDate'},
+					{name:'AwardNo'}	
+		
+				],
+				rowNum : 20,
+				height : 400,  
+				width : 750,
+				pager : 'pager1', 
+				viewrecords: true,
+				loadComplete: function () {
+			                var rowIDs = jQuery("#list").getDataIDs(); 
+			                $.each(rowIDs, function (i, item) {
+			                    if (i % 2 == 0) {
+			                        $('#'+item).removeClass('ui-widget-content');
+			                        $('#'+item).addClass('testcss');
+			                    }
+			                });
+			         },
+				grouping:true, 
+				groupingView : {                  //グルーピング設定
+					groupField : ['ClientName'],     //グループする列指
+			　　　　        groupSummary : [true]
+				},
+				caption: '検索結果'
+		
+			});
+		
+		});
+	</script>
+
+	<h1>Congratulations!!!!</h1>
+
+	<table id="list" class="scroll" cellpadding="0" cellspacing="0"></table>
+	<div id = "pager1"></div>
+
+</apex:page>

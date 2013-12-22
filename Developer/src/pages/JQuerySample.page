@@ -1,0 +1,269 @@
+<apex:page id="JQuerySample" title="JQueryサンプル" label="JQueryサンプル" controller="repeatCon" cache="false" sidebar="false" showHeader="true">
+
+	<apex:stylesheet value="{!URLFOR($Resource.VisualCalSaticResources, '/VisualCalSaticResources/jquery-ui/themes/base/jquery.ui.all.css')}"/>
+
+	<apex:includeScript value="{!URLFOR($Resource.VisualCalSaticResources,'/VisualCalSaticResources/jquery-ui/jquery-1.9.1.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.VisualCalSaticResources,'/VisualCalSaticResources/jquery-ui/ui/jquery-ui.js')}"/>
+
+		<style>
+
+        #JapanRevenueTable {
+          width: auto;
+          border-spacing: 0;
+          font-size:14px;
+        }
+
+        #EventSpace {
+			background: #99CCFF;
+			color: 'white';
+            border-radius: 5px 5px 5px 5px;
+            padding: 2px 2px;
+			margin: 0 .1em;
+			text-align: center;
+        }
+
+        #VisCalHeader {
+          color: #000;
+          padding: 8px 15px;
+          background: #f2f3f3;
+          font-weight: bold;
+          border-left:1px solid #258;
+          border-top:1px solid #258;
+          border-bottom:1px solid #258;
+          line-height: 120%;
+          text-align: center;
+          box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+        }
+        #VisCalHeader:first-child {
+          background: #FA8072;
+          border-radius: 5px 0 0 0;
+        }
+        #VisCalHeader:last-child {
+          background: #99ccff;
+          border-radius:0 5px 0 0;
+          border-right:1px solid #258;
+          box-shadow: 2px 2px 1px rgba(0,0,0,0.1),0px 1px 1px rgba(255,255,255,0.3) inset;
+        }
+
+        #JapanRevenueDetail1_1 {
+          padding: 8px 15px;
+          border-left: 1px solid #84b2e0;
+          text-align: left;
+        }
+
+        #JapanRevenueDetail1_1:last-child {
+
+        }
+
+
+        #JapanRevenueDetail1_2 {
+          padding: 8px 15px;
+          text-align: right;
+        }
+
+        #JapanRevenueDetail1_2:last-child {
+          border-right: 1px solid #84b2e0;
+        }
+
+
+        #JapanRevenueDetail2 {
+          padding: 3px 3px;
+          border-left: 1px solid #84b2e0;
+          text-align: left;
+          vertical-align: top;
+          font-size: 12px;
+        }
+        #JapanRevenueDetail2:last-child {
+          border-right: 1px solid #84b2e0;
+        }
+
+        #JapanRevenueDetail3 {
+          padding: 8px 15px;
+          border-bottom: 1px solid #84b2e0;
+          border-left: 1px solid #84b2e0;
+          text-align: right;
+          vertical-align: top;
+          font-size: 12px;
+        }
+        #JapanRevenueDetail3:last-child {
+          border-right: 1px solid #84b2e0;
+        }
+
+        #heading4{
+            border-bottom: 5px #3cf solid;
+            padding-bottom: 5px;
+        }
+
+        #heading4 span{
+            margin-left:20px;
+            font-size:60%;
+            color: #ccc;
+            position: relative;
+            top: -5px;
+        }
+
+        #CalendarHead{
+			font-family:"cursive";
+			font-size:200%;
+        }
+
+			#jquery-ui-sortable {
+			    list-style-type: none;
+			    margin: 0;
+			    padding: 0;
+			    width: 70%;
+			}
+			#jquery-ui-sortable li {
+			    margin: 0 3px 3px 3px;
+			    padding: 0.3em;
+			    padding-left: 1em;
+			    font-size: 15px;
+			    font-weight: bold;
+			    cursor: move;
+			}
+			#jquery-ui-draggable-wrap {
+			    width: 500px;
+			    height: 300px;
+			    background: #6699FF;
+			    padding: 5px;
+			    margin: 0;
+			    border-style: dashed;
+			    border-radius: 10px;
+			}
+			#jquery-ui-draggable {
+			    width: 100px;
+			    height: 100px;
+			    padding: 30px;
+			    margin: 0;
+			    border-radius: 10px;
+			    font-size: 13px;
+			}
+			#jquery-ui-resizable {
+			    width: 300px;
+			    height: 100px;
+			    padding: 0.5em;
+			}
+			#jquery-ui-resizable h3 {
+			    text-align: center;
+			    margin: 0px 0px 0.5em 0px;
+			}
+		</style>
+		<script>
+		      $(function() {
+        		$('#EventSpace').draggable({cursor:'move', opacity:0.5});
+
+		      });
+
+			$( function() {
+			    $( '#EventSpace' ) . resizable( {
+			        minHeight: 15,
+			        minWidth: 150,
+			        maxHeight: 15,
+			        maxWidth: 1280,
+			   } );
+			} );
+
+			$(function(){
+				$('#JapanRevenueTable').click(function(e){
+					var x = e.pageX;
+					var y = e.pageY;
+					alert('X = ' + x + 'px, Y = ' + y + 'px');
+
+					var offset  = $('#JapanRevenueTable').offset();
+					alert( 'BaseX: ' + offset.left + ', BaseY: ' + offset.top );
+
+					alert( 'RelX: ' + (x - offset.left) + ', RelY: ' + (y - offset.top) );
+
+					$('#locatedpoint').css({top:(y),left:(x),display:'block'}).attr('title','TOP : '+(y)+'px | LEFT : '+(x)+'px');
+				});
+			});
+
+		</script>
+    <apex:pageMessages id="messagearea" showDetail="false" />
+
+    <apex:sectionHeader title="べんりなカレンダー" />
+
+	<apex:form id="theForm">
+			<apex:outputPanel id="theCalendar">
+				<div class="bCalendar">
+				<table class="calendarMonthView" width="100%">
+
+	            <apex:pageBlock title="" mode="maindetail">
+	                <div id="JapanRevenueData">
+	                    <table id="JapanRevenueTable">
+
+	                        <tr border="0">
+	                          <td border="0" align="left">
+								<apex:commandLink action="{!prev}" rerender="theCalendar">
+									<img title="先月" class="prevCalArrow" alt="先月" src="{!URLFOR($Resource.VisualCalSaticResources, '/VisualCalSaticResources/Jpeg/LeftArrow.jpg')}" />
+								</apex:commandLink>
+	                          </td>
+
+	                          <td border="0" id="CalendarHead" colspan="12" align="center">&nbsp;&nbsp;{!month.yearname}年&nbsp;{!month.monthname}月&nbsp;&nbsp;</td>
+
+	                          <td border="0" align="right">
+								<apex:commandLink action="{!next}" rerender="theCalendar">
+									<img title="次月" class="nextCalArrow" alt="次月" src="{!URLFOR($Resource.VisualCalSaticResources, '/VisualCalSaticResources/Jpeg/RightArrow.jpg')}" />
+								</apex:commandLink>
+	                          </td>
+	                        </tr>
+
+	                        <tr id="JapanRevenueDetail2">
+	                        	<apex:repeat value="{!dayOfWeek}" var="dow" id="foreachDayOfWeek">
+	                          		<th id="VisCalHeader" height="15" width="150" colspan="2">
+	                          			{!dow}
+	                          		</th>
+	                          	</apex:repeat>
+	                        </tr>
+
+							<apex:repeat value="{!weeks}" var="wk" id="foreachWeek">
+	                        	<tr id="JapanRevenueDetail2">
+	                        		<apex:repeat value="{!wk.days}" var="day" id="foreachday">
+
+	                          			<td id="JapanRevenueDetail1_1" width="9%">
+	                          				{!day.dayofmonth}
+	                          			</td>
+
+	                          			<td id="JapanRevenueDetail1_2" width="5%">
+	                          				<a href="{!day.taskUrl}" title="タスク作成" target="_blank" alt="タスク作成">
+	                          					タスク
+	                          				</a>
+	                          			</td>
+
+	                          		</apex:repeat>
+		                        </tr>
+
+		                        <tr id="JapanRevenueDetail2" width="100%">
+		                        	<apex:repeat value="{!wk.days}" var="day" id="foreachday2">
+	    	                      		<td id="JapanRevenueDetail2" height="80" colspan="2">
+	        	                  			<apex:repeat value="{!day.eventList}" var="event" id="foreachEvent">
+	        	                  				<div id="EventSpace">
+													<a href="/{!event.ID}" title="詳細へ" target="_blank">
+	                	          						{!event.SUBJECT}
+			                	          			</a>
+			                	          		</div>
+			                	          		<br/>
+			                	          		<br/>
+		      	                    		</apex:repeat>
+	    	    	                  	</td>
+	        	    	             </apex:repeat>
+	            	    	     </tr>
+	                        	<tr id="JapanRevenueDetail3">
+	                        		<apex:repeat value="{!wk.days}" var="day" id="foreachday3">
+	                          			<td id="JapanRevenueDetail3" height="20" colspan="2">
+	                          				<a href="{!memoUrl}?calendarDay={!day.formattedDay}" title="メモ作成" target="_blank">
+												メモ
+											</a>
+	                          			</td>
+	                          		</apex:repeat>
+	                        	</tr>
+							</apex:repeat>
+	                </table>
+	                </div>
+	            </apex:pageBlock>
+
+				</table>
+				</div>
+			</apex:outputPanel>
+        </apex:form>
+</apex:page>

@@ -1,0 +1,3 @@
+<apex:page controller="aws_s3" docType="html-5.0">
+<c:s3_uploader />
+</apex:page>

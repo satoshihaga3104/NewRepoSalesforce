@@ -1,0 +1,94 @@
+<apex:component controller="aws_s3">
+<script>
+function s3_upload_file(){
+    var file = document.getElementById('s3_file_for_upload').files[0];
+
+	alert(file.name);
+	alert(file.type);
+
+    aws_s3.get_url_for_upload(
+        file.name,
+        file.type,
+        function(result, event){
+
+            alert('function start!!!');
+
+            if (event.status == false){
+                alert(event.message);
+                return;
+            }
+
+            alert('Check Point 1');
+
+            if (result.status == false){
+                alert(result.message);
+                return
+            }
+
+            alert('Check Point 2');
+
+
+            url = result.message;
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function(event){
+
+            	alert('Check Point in Onload');
+
+                if (event.target.status == '200'){
+                    alert("Upload Succeeded");
+                } else {
+                    alert("Upload Failed: " + event.target.statusText);
+                    return;
+                }
+                aws_s3.insert_s3_object(
+                    url,
+                    function(result, event){
+                        if (event.status == false){
+                            alert(event.message);
+                            return;
+                        }
+                        if (result.status == false){
+                            alert(result.message);
+                            return
+                        }
+                        alert("Insert Succeeded.");
+                    },
+                    {escape:true}
+                );
+            }
+            alert(url);
+            xhr.open('PUT', url, true);
+
+            alert('Check Point 3');
+
+
+            // set Content-Type
+            xhr.setRequestHeader('Content-Type', file.type);
+
+            alert('Check Point 4');
+
+            // set ACL
+            var acl = "{!JSENCODE(config.acl__c)}";
+            if (acl != ""){
+                xhr.setRequestHeader('x-amz-acl', acl.toLowerCase());
+            }
+
+            alert('Check Point 5');
+
+            // set REDUCED_REDUNDANCY
+            if ({!config.reduced_redundancy__c} == true){
+                xhr.setRequestHeader('x-amz-storage-class','REDUCED_REDUNDANCY');
+            }
+
+            xhr.send(file);
+
+            alert('Check Point 6');
+
+        },
+        {escape:false}
+    );
+}
+</script>
+<input type="file" id="s3_file_for_upload" />
+<button onclick="s3_upload_file();">upload</button>
+</apex:component>

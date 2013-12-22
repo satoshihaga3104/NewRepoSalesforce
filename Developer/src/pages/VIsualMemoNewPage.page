@@ -1,0 +1,106 @@
+<apex:page standardController="VisualMemo__c" sidebar="false" standardStylesheets="false" extensions="VisualMemoExtension">
+
+    <!-- Style Sheet -->
+	<style>
+		.form label {
+			margin-left: 10px;
+			color: #999999;
+			}
+
+        #VisualTitle{
+			text-align: center;
+        }
+
+        #VisualTextInput{
+        	padding : 9px;
+			border: solid 1px #E5E5E5;
+			outline: 0;
+			font: normal 13px/100% Verdana, Tahoma, sans-serif;
+			width: 200px;
+			box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+			-moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+			-webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+        }
+
+        #VisualTextArea{
+			padding: 9px;
+			border: solid 1px #E5E5E5;
+			outline: 0;
+			text-align:left;
+			vertical-align:top;
+			font: normal 13px/100% Verdana, Tahoma, sans-serif;
+			box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+			-moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+			-webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+			width: 600px;
+			max-width: 800px;
+			height: 300px;
+			line-height: 150%;
+        }
+
+		#VisualTextInput:hover,#VisualTextInput:focus,#VisualTextArea:hover,#VisualTextArea:focus{
+			border-color: #faaaaa;
+			-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
+		}
+
+
+	</style>
+
+	<script type="text/javascript">
+
+		window.sfdcPage.appendToOnloadQueue(
+			function() {
+				document.getElementById('{!$Component.theForm.theHiddenInput}').value = '{!strDay}';
+			}
+		);
+
+	</script>
+
+    <apex:pageMessages id="messagearea" showDetail="false" />
+
+    <apex:sectionHeader title="べんりなメモ" />
+
+	<apex:form id="theForm">
+
+		<apex:commandButton action="{!save}" value="Save" id="SubmitButton" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+		<apex:commandButton action="{!cancel}" value="Cancel" id="CancelButton" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+
+		<table class="calendarMonthView" width="100%">
+			<tr>
+				<td  width="10%" id="VisualTitle" align="center">
+					年月日
+				</td>
+				<td  width="90%">
+					<input type="text" readonly="readonly" id="VisualTextInput" value="{!strDay}" />
+					<apex:inputHidden value="{!VisualMemo__c.Day__c}"  id="theHiddenInput"/>
+				</td>
+			</tr>
+
+			<tr>
+				<td  width="10%" id="VisualTitle" align="center">
+					タイトル
+				</td>
+				<td  width="90%">
+					<apex:inputField value="{!VisualMemo__c.Title__c}" id="MemoTitle" onMouseOut="this.style.borderColor='#E5E5E5'"  onMouseOver="this.style.borderColor='#faaaaa'" style="padding : 9px;border: solid 1px #E5E5E5;outline: 0;font: normal 13px/100% Verdana, Tahoma, sans-serif;width: 200px;box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;-moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;-webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;"/>
+				</td>
+			</tr>
+
+			<tr>
+				<td  width="10%" id="VisualTitle" align="center">
+					メモ
+				</td>
+				<td  width="90%">
+					<apex:inputTextarea value="{!VisualMemo__c.Description__c}" id="MemoDesc" onMouseOut="this.style.borderColor='#E5E5E5'"  onMouseOver="this.style.borderColor='#faaaaa'" style="padding: 9px;border: solid 1px #E5E5E5;outline: 0;font: normal 13px/100% Verdana, Tahoma, sans-serif;box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;-moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;-webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;width: 600px;max-width: 800px;height: 300px;line-height: 150%;"/>
+				</td>
+			</tr>
+
+		</table>
+
+		<apex:inputField value="{!VisualMemo__c.JobCategory__c}"/>
+		<apex:inputField value="{!VisualMemo__c.SubCategory__c}"/>
+
+	 </apex:form>
+
+	 <apex:relatedList list="ReferenceItem__r" />
+
+</apex:page>
