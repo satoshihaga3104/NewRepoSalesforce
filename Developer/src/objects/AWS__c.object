@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AccessKeyId__c</fullName>
+        <defaultValue>&quot;----- DUMMY -----&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>AccessKeyId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <defaultValue>&quot;----- DUMMY -----&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RequestTimeout__c</fullName>
+        <defaultValue>10000</defaultValue>
+        <description>milli seconds</description>
+        <externalId>false</externalId>
+        <label>RequestTimeout</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SecretAccessKey__c</fullName>
+        <defaultValue>&quot;----- DUMMY -----&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>SecretAccessKey</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>AWS</label>
+</CustomObject>
