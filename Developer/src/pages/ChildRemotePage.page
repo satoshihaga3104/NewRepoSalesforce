@@ -1,0 +1,43 @@
+<apex:page controller="ChildRemoteController" showHeader="true" sidebar="false" id="page">
+    <apex:form id="form">
+        <!-- @RemoteActionサンプル:文字列のセット -->
+        <apex:commandButton value=" Hello " onClick="return sayHello('Jude');" />
+        &nbsp;
+        <!-- @RemoteActionサンプル:SOQLで取引先取得 -->
+        <apex:commandButton value=" GetAccountName " onClick="return getHello();" />
+        <hr/>
+        <div id="result">[Results]</div>
+    </apex:form>
+    <script type="text/javascript">
+        /*
+         * @RemoteActionサンプル
+         * 文字列のセット
+         */
+        function sayHello(helloTo) {
+            {!$RemoteAction.ChildRemoteController.sayHello}(helloTo, function(result, event){
+                if(event.status) {
+                    document.getElementById("result").innerHTML = result;
+                }
+            });
+            return false;
+        }
+        
+        /*
+         * @RemoteActionサンプル
+         * SOQLで取引先取得
+         */
+        function getHello() {
+            var query = 'select Id,Name from Account limit 5';
+            {!$RemoteAction.ChildRemoteController.queryData}(query, function(result, event){
+                if(event.status) {
+                    var accountNames = '';
+                    for (var i = 0; i < result.length; i++) {
+                        accountNames = accountNames + result[i].Name + ' | ';
+                    }
+                    document.getElementById("result").innerHTML = accountNames;
+                }
+            });
+            return false;
+        }
+    </script>
+</apex:page>

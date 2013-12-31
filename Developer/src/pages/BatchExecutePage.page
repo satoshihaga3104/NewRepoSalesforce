@@ -1,0 +1,5 @@
+<apex:page controller="BatchExample" sidebar="false">
+<apex:form >
+  <apex:commandButton action="{!execute}" value="実行" />
+</apex:form>
+</apex:page>

@@ -1,0 +1,199 @@
+<!-- Apex Code 演習8-1 カスタムSOAP Webサービス(1) -->
+<!-- EmployeeReferralタブのVisualforce画面から入力しsaveボタン押下 -->
+<!-- →CandidateKeyWebService#submitEmployeeReferral()をSOAP API呼び出し -->
+<!-- →CandidateレコードとJobApplicationレコードを格納する -->
+
+<!-- controllerは定義されていない→JavaScriptからSOAP APIを呼び出している -->
+<apex:page >
+
+<script type="text/javascript" src="/js/functions.js"></script>
+<script src="/soap/ajax/29.0/connection.js"></script>
+<script src="/soap/ajax/29.0/apex.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	<!-- 入力チェックを実施、すべてOkならばsave()を実行 -->
+	function validate(){
+		alert("Check Point 1");
+		<!-- connection.js上のメソッドを呼び出し -->
+		sforce.connection.init( "{!$API.Session_ID}", "{!$Api.Partner_Server_URL_140}");
+
+		<!-- 判定結果格納用変数 -->
+		var ok2Go = true;
+
+		alert('Check Point 2');
+		
+		<!-- form"refForm"内のID値"lastname"の値を取得 -->
+		var ln = document.forms["refForm"].elements["lastname"].value;
+		<!-- lastname値が空文字もしくはnullの場合 -->
+		if ((ln == "")||(ln == null)){
+			<!-- ダイアログでアラート表示し判定結果をNGに -->
+			alert("Last name is required");
+			ok2Go = false;
+		}
+
+		alert('Check Point 3');
+
+		// form"refForm"内のID値"email"の値を取得 -->
+		var email = document.forms["refForm"].elements["email"].value; 
+		<!-- email値が空文字もしくはnullの場合 -->
+		if ((email == "")||(email == null)){
+			<!-- ダイアログでアラート表示し判定結果をNGに -->
+			alert("Email is required");
+			ok2Go = false;
+		}
+
+		alert('Check Point 4');
+
+		<!-- 判定結果OKの場合 -->
+		if (ok2Go) {
+			<!-- save()を呼び出しCandidateレコードを追加 -->
+			<!-- 引数posIdは-->
+			save(posId);
+
+		<!-- 判定結果NGの場合 -->
+		} else {
+			<!-- 戻り値falseを返す -->
+			return false;
+		}
+	}
+
+	<!-- 応募者レコードを新規格納する関数 -->
+	<!-- 引数posId: 応募者レコードに紐づける募集職種レコードID -->
+	function save(posId){
+
+		alert('Check Point 5');
+
+		<!-- Inquiry__c(問い合わせ)レコードを新規生成
+		var inquiry = new sforce.SObject("Inquiry__c");
+		
+		inquiry.Title__c = 'From : ' + document.forms["refForm"].elements["firstname"].value + ' ' + document.forms["refForm"].elements["lastname"].value + ' New inquiry record'; 
+		inquiry.Email__c = document.forms["refForm"].elements["email"].value;
+
+		alert('Check Point 6');
+
+		<!-- Webサービスを呼び出し、応募者レコードを格納している -->
+		try {
+			<!-- Apexクラス(WebService): CandidateKeyWebService -->
+			<!-- 呼び出すメソッド名：    submitEmployeeReferral -->
+			<!-- 渡す引数：              募集職種レコードID -->
+			<!--                         応募者レコード -->
+			<!-- 戻り値：                成功→true -->
+			
+			alert('Check Point 7');
+			
+			var success = sforce.apex.execute("InquiryKeyWebService","submitInInquiryCreation",{a:inquiry});
+
+			alert('Check Point 8');
+
+			<!-- 値が返ってきた場合 -->
+			if (success != null) {
+				<!-- DB格納成功の場合 -->
+				if (success == "true") {
+
+					alert('Check Point 9');
+
+					<!-- DOMを使ってBODYタグ内を下記 -->
+					<!-- HTMLに書き換える-->
+					document.body.innerHTML = "<h1>Referral Successfully Submitted. Thank You!</h1><br/><br/><br/><br/>";
+
+				<!-- DB格納失敗の場合 -->
+				} else {
+
+					alert('Check Point 10');
+
+					<!-- DOMを使ってBODYタグ内を下記 -->
+					<!-- HTMLに書き換える-->
+					document.body.innerHTML = "<h1>Temporarily unable to submit referrals. Please try again later.</h1><br/><br/><br/><br/>";
+				}
+			<!-- SOAP API呼び出し失敗の場合 -->
+			<!-- デバッグログのトレースをtrueに変更 -->
+			} else {
+
+				alert('Check Point 11');
+			 
+				sforce.debug.trace = true; 
+			}
+
+		<!-- 例外発生時 -->
+		} catch(e) {
+
+			alert('Check Point Exception!!');
+
+			<!-- デバッグログのトレースをtrueに変更 -->
+			sforce.debug.trace = true;
+			<!-- デバッグログに例外情報を書き込む -->
+			sforce.debug.open();
+			sforce.debug.log(e);
+		}
+	}
+</script>
+
+<!-- formタグ相当 -->
+<form id="refForm" name="refForm">
+
+  <!-- 応募者レコードの属性値を入力させるためのテーブル -->
+  <table id="inquiry">
+    <tr>
+      <!-- First_Name__cを格納するためのテキストフィールド -->
+      <td>First Name:</td>
+      <td>
+        <input type="text" id="firstname" />
+      </td>
+      <!-- Phone__cを格納するためのテキストフィールド -->
+      <td>Phone:</td>
+      <td>
+        <input type="text" id="phone" />
+      </td>
+    </tr>
+    <tr>
+      <!-- Last_Name__cを格納するためのテキストフィールド -->
+      <td>
+        <font color="#ff2222">Last Name:</font>
+      </td>
+      <td>
+        <input type="text" id="lastname" />
+      </td>
+      <!-- Mobile__cを格納するためのテキストフィールド -->
+      <td>Mobile:</td>
+      <td>
+        <input type="text" id="mobile" />
+      </td>
+    </tr>
+    <tr>
+      <!-- Email__cを格納するためのテキストフィールド -->
+      <td>
+        <font color="#ff2222">Email:</font>
+      </td>
+      <td>
+        <input type="text" id="email" />
+      </td>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <!-- レジュメ(ファイル)を格納するためのファイル入力フィールド -->
+      <!-- ※使用していない※ -->
+      <td>Resume:</td>
+      <td>
+        <input type="file" id="resume" name="resume" />
+      </td>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <br />
+      </td>
+    </tr>
+    <table cellpadding="0" cellspacing="0" border="0" ID="Table2">
+      <tr>
+        <td class="pbTitle">
+          <img src="/s.gif" alt="" width="1" height="1" class="minWidth" title="" />
+        </td>
+        <td class="pbButtonb">
+          <!-- saveボタン：押下→validate()呼び出し -->
+          <input value=" Save " class="btn" type="button" title="Save" name="save" onclick='alert("Start!!");javascript:validate();' ID="Button1" />
+        </td>
+      </tr>
+    </table>
+  </table>
+</form>
+</apex:page>

@@ -1,0 +1,17 @@
+<apex:page >
+  <apex:includeScript value="/soap/ajax/29.0/connection.js" />
+  <apex:includeScript value="/soap/ajax/29.0/apex.js" />
+  <script>
+    function executeJS(){
+      sforce.connection.sessionId = '{!$Api.Session_ID}';
+      try{
+        sforce.apex.execute('ReadOnlySample2', 'executeReadOnly', {});
+      }catch(e){
+        alert(e);
+      }
+    }
+  </script>
+  <apex:form >
+    <apex:commandButton value="Go" onclick="executeJS(); return false;" />
+  </apex:form>
+</apex:page>
