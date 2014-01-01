@@ -1,0 +1,128 @@
+<apex:page controller="MainViewController" title="フレンドリクエスト" label="フレンドリクエスト" sidebar="false" showHeader="false" standardStylesheets="true">
+
+    <apex:stylesheet value="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/css/global-jp.css')}" />
+	<style>
+        #ResultHeader {
+          color: #617798;
+          padding: 8px 15px;
+          font: normal 13px/100% Verdana, Tahoma, sans-serif;
+          border-bottom:1px solid #258;
+          line-height: 120%;
+          text-align: center;
+        }
+        #ResultHeader:first-child {
+        }
+        #ResultHeader:last-child {
+          border-radius:0 5px 0 0;
+        }
+
+		#ResultDetail {
+          padding: 3px 3px;
+          border-left: 1px solid #84b2e0;
+          border-bottom: 1px solid #84b2e0;
+          text-align: center;
+          vertical-align: middle;
+          font-size: 12px;
+        }
+        #ResultDetail:last-child {
+          border-right: 1px solid #84b2e0;
+        }
+
+	</style>
+
+      <apex:form >
+
+        <div>
+            <div>
+                <div id="content-wrapper" >
+                    <header id="header" >
+                        <div class="container" >
+                            <ul>
+                                <li id="block-logo">
+                                    <h1><img alt="Salesforceデモンストレーション"  src="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/images/logoEverydayme.gif')}" /></h1>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- header navigation-->
+                        <div id="primary-nav">
+                            <nav role="navigation">
+                                <div class="nav-bar">
+                                    <div class="nav-inner">
+                                        <ul class="menu-drop">
+
+                                            <li class="nav-arrow categories">
+                                                <span class="arrow-white"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                        <!-- end primary nav-->
+                    </header>
+
+                    <div id="content-body-wrapper">
+                        <section id="content-body" class="container" role="main">
+                            <article class="form">
+								<div class="border-top">
+								</div>
+                                <div class="registration-left">
+                                    <div align="center">
+                                    	<img src="{!loginUsaerInfo.PictureURL__c}" alt="{!loginUsaerInfo.Name}" />
+                                        <h2>{!loginUsaerInfo.Name}</h2>
+
+											<apex:commandButton value="フレンドリクエストへ" action="{!moveToMainView}" styleClass="icon-button"/>
+
+											<apex:commandButton value="商品をさがす" action="{!moveToGoodsSearch}" styleClass="icon-button"/>
+
+											<apex:commandButton value="友達をさがす" action="{!moveToFriendSearch}" styleClass="icon-button"/>
+
+										<fieldset name="log-in">
+											<button class="icon-button">お問い合わせ</button><br/>
+
+										</fieldset>
+
+											<apex:commandButton value="お客さまのプロフィール" action="{!moveToMyPage}" styleClass="icon-button"/>
+
+
+                                    </div>
+                                </div>
+                                <div >
+
+                                    <div class="registration-right">
+
+									<div class="registration-box-inner" >
+
+									<!-- Message Area -->
+									<apex:pageMessages ></apex:pageMessages>
+
+									<apex:pageBlock title="　" mode="maindetail">
+	                                    <apex:pageBlockSection columns="2" collapsible="true" id="SearchCriteria">
+
+											<img src="{!campaign.CampaignImageURL__c}" alt="" />
+	          								<apex:inputfield value="{!campaign.PurchaseAmount__c}" style="font-size:2pt;font-weight: normal;"/>
+
+	        	  							<apex:inputfield value="{!campaign.StartDay__c}" style="font-size:2pt;font-weight: normal;"/>
+          									<apex:inputfield value="{!campaign.EndDay__c}" style="font-size:2pt;font-weight: normal;"/>
+
+
+          								</apex:pageBlockSection>
+
+
+          							</apex:pageBlock>
+
+
+                                    </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </apex:form>
+
+									<apex:relatedList list="Campaign__r" />
+
+</apex:page>

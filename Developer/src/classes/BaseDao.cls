@@ -1,9 +1,8 @@
 /*
 @Name            : BaseDao
 @Author          : Satoshi Haga
-@Date            : July 1, 2013
-@Description     : Abstract Dao Class
-@version         : 07/01/2013 First Creation
+@Description     : Abstract Dao class. Each dao class extends this class.
+@version         : First Create 2013/12/11 Satoshi Haga
 */
 public abstract class BaseDao {
 
@@ -111,102 +110,6 @@ public abstract class BaseDao {
 		return obj;
 	}
 
-	//2013.09.09 Satoshi.Haga Adding sorting function on daily page Start
-	/**
-	 * Searching function. All column are included autmatically.Result is ordered by parametered column(ASC)
-	 * @param refClm 	The name of referenced key
-	 * @param id 		Id of targetted record
-	 * @return Object  result of query
-	 */
-	public Object getAllColumnDataWithOrderKey(List<ID> listId ,String strOrder){
-		List<ID> pId = listId;
-		String strSql = '';
-		strSql = 'Select ' + getAllColumnString() + ' from ' + tp.getDescribe().getName() + ' where ID IN :pId ORDER BY ' + strOrder;
-
-		//Execute SOQL query with bind valiable 'pId'
-		Object obj = database.query(strSql);
-
-		return obj;
-	}
-
-	/**
-	 * Searching function. All column are included autmatically.Result is ordered by parametered column(ASC)
-	 * @param refClm 	The name of referenced key
-	 * @param id 		Id of targetted record
-	 * @return Object  result of query
-	 */
-	public Object getAllColumnDataWithReverseOrderKey(List<ID> listId ,String strOrder){
-		List<ID> pId = listId;
-		String strSql = '';
-		strSql = 'Select ' + getAllColumnString() + ' from ' + tp.getDescribe().getName() + ' where ID IN :pId ORDER BY ' + strOrder + ' DESC ';
-
-		//Execute SOQL query with bind valiable 'pId'
-		Object obj = database.query(strSql);
-
-		return obj;
-	}
-
-	//2013.09.09 Satoshi.Haga Adding sorting function on daily page End
-
-
-	/**
-	 * Searching function. Execute query with column name and ID. This is called when referenced object is fixed.
-	 * All column are included autmatically.
-	 * @param refClm 	The name of referenced key
-	 * @param id 		Id of targetted record
-	 * @return Object  result of query
-	 */
-	public Object getReferencedList(String refClm, ID id){
-		ID refId = id;
-		String strSql = '';
-		strSql = 'Select ' + getAllColumnString() + ' from ' + tp.getDescribe().getName() + ' where ' + refClm + ' = :refId';
-
-		//Execute SOQL query with bind valiable 'pId'
-		Object obj = database.query(strSql);
-
-		return obj;
-	}
-
-	/**
-	 * Searching function. Execute query with column name and ID. This is called when referenced object is fixed.
-	 * Result is ordered by parametered column(ASC)
-	 * All column are included autmatically.
-	 * @param refClm 	The name of referenced key
-	 * @param id 		Id of targetted record
-	 * @param strOrder 	Order Key(ASC)
-	 * @return Object  result of query
-	 */
-	public Object getReferencedListWithOrderKey(String refClm, ID id ,String strOrder){
-		ID refId = id;
-		String strSql = '';
-		strSql = 'Select ' + getAllColumnString() + ' from ' + tp.getDescribe().getName() + ' where ' + refClm + ' = :refId ORDER BY ' + strOrder;
-
-		//Execute SOQL query with bind valiable 'pId'
-		Object obj = database.query(strSql);
-
-		return obj;
-	}
-
-	/**
-	 * Searching function. Execute query with column name and ID. This is called when referenced object is fixed.
-	 * Result is ordered by parametered column(DESC)
-	 * All column are included autmatically.
-	 * @param refClm 	The name of referenced key
-	 * @param id 		Id of targetted record
-	 * @param strOrder 	Order Key(DESC)
-	 * @return Object  result of query
-	 */
-	public Object getReferencedListWithReverseOrderKey(String refClm, ID id ,String strOrder){
-		ID refId = id;
-		String strSql = '';
-		strSql = 'Select ' + getAllColumnString() + ' from ' + tp.getDescribe().getName() + ' where ' + refClm + ' = :refId ORDER BY ' + strOrder + ' DESC ';
-
-		//Execute SOQL query with bind valiable 'pId'
-		Object obj = database.query(strSql);
-
-		return obj;
-	}
-
 	/**
 	 * Searching function. Execute query with parametered criteria. Criteria is given as map object, which have the list of parameter as key-value store
 	 * @param 	param	Parameter list as key-value store
@@ -250,6 +153,17 @@ public abstract class BaseDao {
 	}
 
 	/**
+	 * Get name of targetted object
+	 * @return 	String object name
+	 */
+	public String getObjectName(){
+		if(tp == null)return null;
+
+		return tp.getDescribe().getName();
+	}
+
+
+	/**
 	 * Get object prefix of targetted object
 	 * @return 	String object prefix
 	 */
@@ -278,6 +192,8 @@ public abstract class BaseDao {
 
 		return '/' + getObjectPrefix() + '/o';
 	}
+
+
 
 
 }

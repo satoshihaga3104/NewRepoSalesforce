@@ -1,0 +1,94 @@
+<apex:page standardController="Goods__c" extensions="GoodsDetailExtension" title="商品詳細画面" label="商品詳細画面" sidebar="false" showHeader="false" standardStylesheets="true">
+  <apex:stylesheet value="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/css/style.css')}" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8" />
+  <header id="identity-header">
+    <img src="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/images/Salesforce.jpg')}" width="140" alt=""/>Salesforce E-Commerce Community Site
+  </header>
+  <div id="content" class="clearfix">
+    <div id="side">
+      <nav>
+        <ul>
+          <li>Menu</li>
+          <li>
+            <a href="{!urlApprovalRequest}">
+              <p class="normaltext">フレンドリクエスト</p>
+            </a>
+          </li>
+          <li>
+            <a href="{!urlGoodsSearch}">
+              <p class="normaltext">商品をさがす</p>
+            </a>
+          </li>
+          <li>
+            <a href="{!urlFriendsSearch}">
+              <p class="normaltext">友達をさがす</p>
+            </a>
+          </li>
+          <li>
+            <a href="{!urlMyProfile}">
+              <p class="normaltext">お客さまのプロフィール</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <apex:form >
+      <div id="main">
+        <p class="normaltext">Profile</p>
+        <div id="Design1">
+          <table id="Design3" width="98%">
+            <tr height="0">
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+            </tr>
+            <tr id="Design2">
+              <td id="itemfield" height="50" colspan="7">
+                <img src="{!Goods__c.PictureURL__c}" width="200" alt="" />
+                <apex:inputfield value="{!Goods__c.PurchaseAmount__c}" style="width:20px"/>個&nbsp; &nbsp;
+                <apex:commandButton value="購入する" action="{!purchaseOrder}" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="Design2" height="50" >商品名 </td>
+              <td id="itemfield" height="50" colspan="6">
+                <apex:outputfield value="{!Goods__c.Name}"/>
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="Design2" height="50" >価格 </td>
+              <td id="itemfield" height="50" colspan="6">
+                <apex:outputfield value="{!Goods__c.StandardPrice__c}"/>
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="Design2" height="50" >発売日 </td>
+              <td id="itemfield" height="50" colspan="6">
+                <apex:outputfield value="{!Goods__c.StartDate__c}"/>
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="itemfield" height="50" colspan="7">商品のご紹介 </td>
+            </tr>
+            <tr id="Design2">
+              <td id="itemfield" height="50" colspan="7">
+                <apex:outputfield value="{!Goods__c.Comment__c}"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </apex:form>
+    <div id="right">
+      <chatter:follow entityId="{!Goods__c.Id}"/>
+      <chatter:followers entityId="{!Goods__c.Id}"/>
+      <chatter:feed entityId="{!Goods__c.Id}"/>
+    </div>
+  </div>
+  <footer id="identity-footer">Salesforce Demonstration </footer>
+</apex:page>

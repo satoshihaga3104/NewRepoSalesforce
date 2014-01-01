@@ -1,5 +1,6 @@
 public class selectedSizeWorkaround {
 
+
 	ApexPages.StandardSetController setCon;
 
 	public selectedSizeWorkaround(ApexPages.StandardSetController controller) {
@@ -13,4 +14,6 @@ public class selectedSizeWorkaround {
 	public integer getMyRecordsSize() {
 		return setCon.getRecords().size();
 	}
+
+
 }

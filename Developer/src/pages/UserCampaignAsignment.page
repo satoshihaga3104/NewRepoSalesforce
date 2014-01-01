@@ -1,0 +1,23 @@
+<apex:page standardController="UserInformation__c" recordSetVar="users" >
+    <apex:form id="muform">
+        <apex:pageBlock title="対象キャンペーンを選択して下さい" mode="edit" >
+            <apex:pageMessages />
+            <apex:pageBlockSection >
+                <apex:inputField value="{!UserInformation__c.Campaign__c}" id="Campaign" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom" >
+                <apex:commandButton value="更新" action="{!save}" id="butsav"/>
+                <apex:commandButton value="キャンセル" action="{!cancel}" id="butcan"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock title="選択された顧客" >
+            <apex:pageBlockTable value="{!selected}" var="user" >
+                <apex:column value="{!user.Name}"/>
+                <apex:column value="{!user.Age__c}"/>
+                <apex:column value="{!user.FamilyCount__c}"/>
+                <apex:column value="{!user.Marriage__c}"/>
+                <apex:column value="{!user.FamilyList__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

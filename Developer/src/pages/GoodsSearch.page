@@ -1,0 +1,146 @@
+<apex:page controller="GoodsSearchController" title="友達をさがす" label="友達をさがす" sidebar="false" showHeader="false" standardStylesheets="true">
+  <apex:stylesheet value="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/css/style.css')}" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8" />
+  <apex:form >
+    <header id="identity-header">
+      <img src="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/images/Salesforce.jpg')}" width="140" alt=""/>Salesforce E-Commerce Community Site
+    </header>
+    <div id="content" class="clearfix">
+      <div id="side">
+        <nav>
+          <ul>
+            <li>Menu</li>
+            <li>
+              <a href="{!urlApprovalRequest}">
+                <p class="normaltext">フレンドリクエスト</p>
+              </a>
+            </li>
+            <li>
+              <a href="{!urlGoodsSearch}">
+                <p class="normaltext">商品をさがす</p>
+              </a>
+            </li>
+            <li>
+              <a href="{!urlFriendsSearch}">
+                <p class="normaltext">友達をさがす</p>
+              </a>
+            </li>
+            <li>
+              <a href="{!urlMyProfile}">
+                <p class="normaltext">お客さまのプロフィール</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div id="main">
+        <apex:pageMessages id="messagearea" showDetail="false" />
+        <p class="normaltext">検索条件</p>
+        <div id="Design1">
+          <table id="Design3" width="98%">
+            <tr height="0">
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+            </tr>
+            <tr id="Design2">
+              <td id="Design2" height="50" >価格 </td>
+              <td id="itemfield" height="50" colspan="6">
+                <apex:inputfield value="{!criteria.PriceFrom__c}" style="width:60px"/>&nbsp;～&nbsp;
+                <apex:inputfield value="{!criteria.PriceTo__c}" style="width:60px"/>
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="Design2" height="50" >カテゴリ </td>
+              <td id="Design2" height="50" colspan="6">
+                <apex:inputfield value="{!criteria.Category__c}" />
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="Design2" height="50" colspan="2">発売開始日 </td>
+              <td id="itemfield" height="50" colspan="5">
+                <apex:inputfield value="{!criteria.StartDate__c}" styleClass="normaitext"/>以降に販売された商品
+              </td>
+            </tr>
+          </table>
+        </div>
+        <br/>
+        <apex:commandButton value="検索(最大{!upperLimitCount}件まで)" action="{!search}" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+        <br/>
+        <br/>
+        <apex:pageBlock id="resultBlock" title=" " rendered="{!AND(listGoods.size >0)}" mode="maindetail">
+          <div id="Design1">
+            <table id="Design3" width="98%">
+              <tr height="0">
+                <td width="14%" style="table-layout:fixed;"></td>
+                <td width="14%" style="table-layout:fixed;"></td>
+                <td width="14%" style="table-layout:fixed;"></td>
+                <td width="14%" style="table-layout:fixed;"></td>
+                <td width="14%" style="table-layout:fixed;"></td>
+                <td width="14%" style="table-layout:fixed;"></td>
+                <td width="14%" style="table-layout:fixed;"></td>
+              </tr>
+              <tr height="0">
+                <td width="14%" id="Design2">購入個数</td>
+                <td width="14%" id="Design2" colspan="2">写真</td>
+                <td width="14%" id="Design2" colspan="2">商品名</td>
+                <td width="14%" id="Design2" colspan="2">標準価格</td>
+              </tr>
+              <apex:repeat value="{!listGoods}" var="goods">
+                <tr id="Design2">
+                  <td id="Design2" height="50" >
+                    <apex:inputhidden id="updateChecked" value="{!goods.CheckStatus__c}" />
+                    <apex:inputField value="{!goods.PurchaseAmount__c}" style="width:20px" onchange="document.getElementById('{!$Component.updateChecked}').checked = true"/>
+                  </td>
+                  <td id="itemfield" height="50" colspan="2">
+                    <a href="/{!goods.Id}">
+                      <img src="{!goods.PictureURL__c}" width="200" alt=""/>
+                    </a>
+                  </td>
+                  <td id="Design2" height="50" colspan="2">
+                    <apex:outputField value="{!goods.Name}"/>
+                  </td>
+                  <td id="Design2" height="50" colspan="2">
+                    <apex:outputField value="{!goods.StandardPrice__c}"/>
+                  </td>
+                </tr>
+              </apex:repeat>
+            </table>
+          </div>
+          <br/>
+          <apex:commandButton value="購入する" action="{!purchaseOrder}" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+          <br/>
+        </apex:pageBlock>
+      </div>
+      <div id="right">
+        <p class="normaltext">おすすめキャンペーン</p>
+        <p class="normaltext">
+          <apex:outputField value="{!relatedCampaign.Name}"/>(
+          <apex:outputField value="{!relatedCampaign.PurchaseAmount__c}"/>)
+        </p>
+        <a href="/{!relatedCampaign.Id}">
+          <img src="{!relatedCampaign.CampaignImageURL__c}" alt="" width="200"/>
+        </a>
+        <br/>
+        <p class="normaltext">
+          <apex:outputField value="{!relatedCampaign.Description__c}" style="height:200px;width:200px"/>
+        </p>
+        <br/>
+        <p class="normaltext">商品詳細</p>
+        <apex:repeat value="{!relatedCampaignGoods}" var="goods">
+          <p class="normaltext">
+            <a href="/{!goods.Goods__c}">
+              <img src="{!goods.PictureURL__c}" alt="" width="100"/>
+            </a>&nbsp;{!goods.RedemptionAmount__c}個で{!goods.SpecialTotalAmount__c}円
+          </p>
+        </apex:repeat>
+      </div>
+    </div>
+    <footer id="identity-footer">Salesforce Demonstration </footer>
+  </apex:form>
+</apex:page>

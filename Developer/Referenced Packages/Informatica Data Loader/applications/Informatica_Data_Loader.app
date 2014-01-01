@@ -5,4 +5,8 @@
     <label>Informatica Data Loader</label>
     <logo>Public/Informatica_Cloud_Logo.gif</logo>
     <tab>Integration</tab>
+    <tab>BLND_DFDT_Task__c</tab>
+    <tab>BLND_DFDT_Project__c</tab>
+    <tab>Inquiry__c</tab>
+    <tab>SalesforceExplorer</tab>
 </CustomApplication>

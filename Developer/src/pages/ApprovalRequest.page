@@ -1,0 +1,118 @@
+<apex:page controller="ApproveRequestController" title="フレンドリクエスト" label="フレンドリクエスト" sidebar="false" showHeader="false" standardStylesheets="true">
+
+    <apex:stylesheet value="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/css/style.css')}" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+
+		<header id="identity-header">
+			<img src="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/images/Salesforce.jpg')}" width="140" alt=""/>
+			Salesforce E-Commerce Community Site
+		</header>
+
+ 	<apex:form >
+		<div id="content" class="clearfix">
+
+     		<div id="side">
+				<nav>
+					<ul>
+						<li>Menu</li>
+						<li><a href="{!urlApprovalRequest}"><p class="normaltext">フレンドリクエスト</p></a></li>
+						<li><a href="{!urlGoodsSearch}"><p class="normaltext">商品をさがす</p></a></li>
+						<li><a href="{!urlFriendsSearch}"><p class="normaltext">友達をさがす</p></a></li>
+						<li><a href="{!urlMyProfile}"><p class="normaltext">お客さまのプロフィール</p></a></li>
+					</ul>
+				</nav>
+			</div>
+
+			<div id="main">
+				<apex:pageMessages id="messagearea" showDetail="false" />
+					<p class="normaltext">未処理のフレンドリクエスト</p>
+
+					<br/>
+
+				<apex:pageBlock id="NoRequest" title=" " rendered="{!AND(listApprovalRequest.size ==0)}" mode="maindetail">
+					現在、未処理のリクエストはありません。
+				</apex:pageBlock>
+
+				<apex:pageBlock id="resultBlock" title=" " rendered="{!AND(listApprovalRequest.size >0)}" mode="maindetail">
+
+
+                    <div id="Design1">
+                        <table id="Design3" width="98%">
+
+                            <tr height="0">
+                                <td width="14%" style="table-layout:fixed;"></td>
+                                <td width="14%" style="table-layout:fixed;"></td>
+                                <td width="14%" style="table-layout:fixed;"></td>
+                                <td width="14%" style="table-layout:fixed;"></td>
+                                <td width="14%" style="table-layout:fixed;"></td>
+                                <td width="14%" style="table-layout:fixed;"></td>
+                                <td width="14%" style="table-layout:fixed;"></td>
+                            </tr>
+
+                            <tr height="0">
+                                <td width="14%" id="Design2"></td>
+                                <td width="14%" id="Design2" colspan="2">写真</td>
+                                <td width="14%" id="Design2" colspan="2">名前</td>
+                                <td width="14%" id="Design2" >職業</td>
+                                <td width="14%" id="Design2" >年齢</td>
+
+                            </tr>
+
+							<apex:repeat value="{!listApprovalRequest}" var="request">
+                                <tr id="Design2">
+                                        <td id="Design2" height="50"  >
+											<apex:inputfield id="updateChecked" value="{!request.ApprovalFlg__c}" />
+										</td>
+                                        <td id="Design2" height="50"  colspan="2">
+											<a href="/{!request.RequestingUserInformation__c}"><img src="{!request.RequesterPictureURL__c}" alt="" width="100"/></a>
+                                        </td>
+
+                                        <td id="Design2" height="50" colspan="2">
+                                        	<apex:outputField value="{!request.RequesterName__c}"/>
+                                        </td>
+
+                                        <td id="Design2" height="50" >
+                                        	<apex:outputField value="{!request.RequesterJob__c}"/>
+                                        </td>
+
+                                        <td id="Design2" height="50" >
+                                        	<apex:outputField value="{!request.RequesterAge__c}"/>
+                                        </td>
+
+
+                                 </tr>
+							</apex:repeat>
+
+	                    </table>
+					<br/>
+
+                    </div>
+
+						<apex:commandButton value="確定する" action="{!submitRequest}" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+
+
+				</apex:pageBlock>
+			</div>
+
+			<div id="right">
+				<p class="normaltext">おすすめキャンペーン</p>
+				<p class="normaltext"><apex:outputField value="{!relatedCampaign.Name}"/>(<apex:outputField value="{!relatedCampaign.PurchaseAmount__c}"/>)</p>
+				<a href="/{!relatedCampaign.Id}"><img src="{!relatedCampaign.CampaignImageURL__c}" alt="" width="200"/></a><br/>
+				<p class="normaltext"><apex:outputField value="{!relatedCampaign.Description__c}" style="height:200px;width:200px"/></p><br/>
+
+				<p class="normaltext">商品詳細</p>
+				<apex:repeat value="{!relatedCampaignGoods}" var="goods">
+					<p class="normaltext"><a href="/{!goods.Goods__c}"><img src="{!goods.PictureURL__c}" alt="" width="100"/></a>&nbsp;{!goods.RedemptionAmount__c}個で{!goods.SpecialTotalAmount__c}円</p>
+				</apex:repeat>
+
+			</div>
+		</div>
+      </apex:form>
+
+		<footer id="identity-footer">
+			Salesforce Demonstration
+		</footer>
+
+</apex:page>

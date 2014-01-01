@@ -1,0 +1,99 @@
+<apex:page standardController="FriendRequest__c" extensions="FriendRequestextension" title="フレンドリクエスト詳細画面" label="フレンドリクエスト詳細画面" sidebar="false" showHeader="false" standardStylesheets="true">
+  <apex:stylesheet value="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/css/style.css')}" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8" />
+  <apex:form >
+    <header id="identity-header">
+      <img src="{!URLFOR($Resource.demo_static_resource, '/demo_static_resource/images/Salesforce.jpg')}" width="140" alt=""/>Salesforce E-Commerce Community Site
+    </header>
+    <div id="content" class="clearfix">
+      <div id="side">
+        <nav>
+          <ul>
+            <li>Menu</li>
+            <li>
+              <a href="{!urlApprovalRequest}">
+                <p class="normaltext">フレンドリクエスト</p>
+              </a>
+            </li>
+            <li>
+              <a href="{!urlGoodsSearch}">
+                <p class="normaltext">商品をさがす</p>
+              </a>
+            </li>
+            <li>
+              <a href="{!urlFriendsSearch}">
+                <p class="normaltext">友達をさがす</p>
+              </a>
+            </li>
+            <li>
+              <a href="{!urlMyProfile}">
+                <p class="normaltext">お客さまのプロフィール</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div id="main">
+        <apex:pageMessages id="messagearea" showDetail="false" />
+        <p class="normaltext">Profile</p>
+        <div id="Design1">
+          <table id="Design3" width="98%">
+            <tr height="0">
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+              <td width="14%" style="table-layout:fixed;"></td>
+            </tr>
+            <tr id="Design2">
+              <td id="itemfield" height="50" colspan="7">
+                <img src="{!FriendRequest__c.RequesterPictureURL__c}" width="200" alt="" />
+                <apex:inputfield value="{!FriendRequest__c.ApprovalFlg__c}"/>
+                <apex:commandButton value="確定する" action="{!save}" style="background: #617798;width: auto;padding: 9px 15px;border: 0;color: #FFFFFF;"/>
+                <br/>
+                <br/>
+              </td>
+            </tr>
+            <tr id="Design2">
+              <td id="itemfield" height="50" >名前 </td>
+              <td id="itemfield" height="50" colspan="2">
+                <apex:outputfield value="{!FriendRequest__c.RequesterName__c}"/>
+              </td>
+              <td id="itemfield" height="50" >年齢 </td>
+              <td id="itemfield" height="50" colspan="3">
+                <apex:outputfield value="{!FriendRequest__c.RequesterAge__c}"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="right">
+        <p class="normaltext">おすすめキャンペーン</p>
+        <p class="normaltext">
+          <apex:outputField value="{!relatedCampaign.Name}"/>(
+          <apex:outputField value="{!relatedCampaign.PurchaseAmount__c}"/>)
+        </p>
+        <a href="/{!relatedCampaign.Id}">
+          <img src="{!relatedCampaign.CampaignImageURL__c}" alt="" width="200"/>
+        </a>
+        <br/>
+        <p class="normaltext">
+          <apex:outputField value="{!relatedCampaign.Description__c}" style="height:200px;width:200px"/>
+        </p>
+        <br/>
+        <p class="normaltext">商品詳細</p>
+        <apex:repeat value="{!relatedCampaignGoods}" var="goods">
+          <p class="normaltext">
+            <a href="/{!goods.Goods__c}">
+              <img src="{!goods.PictureURL__c}" alt="" width="100"/>
+            </a>&nbsp;{!goods.RedemptionAmount__c}個で{!goods.SpecialTotalAmount__c}円
+          </p>
+        </apex:repeat>
+      </div>
+    </div>
+    <footer id="identity-footer">Salesforce Demonstration </footer>
+  </apex:form>
+</apex:page>
