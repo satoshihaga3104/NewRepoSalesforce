@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
+encoding//src/components=UTF-8
+encoding//src/components/CommonLeft.component=UTF-8
+encoding//src/pages=UTF-8
 encoding//src/pages/BatchExecutePage.page=UTF-8
 encoding//src/pages/SoapPage.page=UTF-8
+encoding//src/pages/test1.page=UTF-8

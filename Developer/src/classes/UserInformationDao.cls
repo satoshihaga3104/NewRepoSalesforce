@@ -100,8 +100,8 @@ public class UserInformationDao extends BaseDao{
 	}
 
 	//District
-  	strQuery += strJoin + ' DistrictName__c = :pDistrictName ';
-  	strJoin = ' AND ';
+  	//strQuery += strJoin + ' DistrictName__c = :pDistrictName ';
+  	//strJoin = ' AND ';
 
 
 	//Upper limit

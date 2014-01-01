@@ -84,11 +84,11 @@
         </div>
       </div>
     </apex:form>
+    
     <div id="right">
-      <chatter:follow entityId="{!Goods__c.Id}"/>
-      <chatter:followers entityId="{!Goods__c.Id}"/>
-      <chatter:feed entityId="{!Goods__c.Id}"/>
+		<c:CommonRightChatter objectId="{!Goods__c.Id}" />
     </div>
+  
   </div>
   <footer id="identity-footer">Salesforce Demonstration </footer>
 </apex:page>

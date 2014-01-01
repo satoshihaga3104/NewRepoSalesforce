@@ -31,15 +31,15 @@ public class UserInformationTriggerHandler{
 		}
 
 		//Insert initial cost into PurchaseTransaction__c
-		PurchaseTransaction__c purchase = new PurchaseTransaction__c();
+		//PurchaseTransaction__c purchase = new PurchaseTransaction__c();
 
-		purchase.PuchasedBy__c = new UserInformationDao().getRelatedRecord(UserInfo.getUserId()).Id;
-		purchase.PuchaseDate__c = date.today();
-		purchase.Price__c = CommonConstants.PRICE_INITIAL_COST;
-		purchase.PurchaseType__c = CommonConstants.INITIAL_COST;
+		//purchase.PuchasedBy__c = new UserInformationDao().getRelatedRecord(UserInfo.getUserId()).Id;
+		//purchase.PuchaseDate__c = date.today();
+		//purchase.Price__c = CommonConstants.PRICE_INITIAL_COST;
+		//purchase.PurchaseType__c = CommonConstants.INITIAL_COST;
 
 		//Add it into database.
-		insert purchase;
+		//insert purchase;
 
 	}
 

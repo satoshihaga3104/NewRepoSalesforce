@@ -1,0 +1,9 @@
+<apex:component >
+
+	<apex:attribute name="objectId" type="string" description="objectId for chatter" />
+	
+	<chatter:follow entityId="{!objectId}"/>
+	<chatter:followers entityId="{!objectId}"/>
+	<chatter:feed entityId="{!objectId}"/>
+	
+</apex:component>

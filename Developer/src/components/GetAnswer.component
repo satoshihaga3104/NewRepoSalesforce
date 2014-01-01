@@ -1,0 +1,7 @@
+<apex:component controller="ExtFileController">
+
+	<apex:attribute assignTo="{!strQuestion}" name="question" type="String" required="true" description="This one" />
+
+	<apex:outputText value="{!strAnswer}" />
+
+</apex:component>

@@ -1,0 +1,23 @@
+<apex:component controller="CommonComponentController">
+	<p class="normaltext">おすすめキャンペーン</p>
+	<p class="normaltext">
+		<apex:outputField value="{!relatedCampaign.Name}"/>(
+		<apex:outputField value="{!relatedCampaign.PurchaseAmount__c}"/>)
+	</p>
+	<a href="/{!relatedCampaign.Id}">
+		<img src="{!relatedCampaign.CampaignImageURL__c}" alt="" width="200"/>
+	</a>
+	<br/>
+	<p class="normaltext">
+		<apex:outputField value="{!relatedCampaign.Description__c}" style="height:200px;width:200px"/>
+	</p>
+	<br/>
+	<p class="normaltext">商品詳細</p>
+	<apex:repeat value="{!relatedCampaignGoods}" var="goods">
+		<p class="normaltext">
+			<a href="/{!goods.Goods__c}">
+				<img src="{!goods.PictureURL__c}" alt="" width="100"/>
+            </a>&nbsp;{!goods.RedemptionAmount__c}個で{!goods.SpecialTotalAmount__c}円
+		</p>
+	</apex:repeat>
+</apex:component>
